@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNOWLEDGEDOM | 300 Master Facts</title>
+    <meta name="description" content="KNOWLEDGEDOM: A comprehensive database of 300 facts on History, Politics, and Science. Features XP Quiz, Flashcards, and Voice Search.">
+    <style>
+        :root {
+            --bg: #0f172a; --card: #1e293b; --accent: #0ea5e9; 
+            --text: #f1f5f9; --ans: #4ade80; --highlight: #f59e0b;
+        }
+        body.light-mode {
+            --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --accent: #0284c7;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; transition: 0.3s; }
+        
+        /* HERO SECTION */
+        .hero { display: flex; width: 100%; height: 400px; border-bottom: 5px solid var(--accent); }
+        .hero-pane { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000; }
+        .hero-pane img { width: 100%; height: 100%; object-fit: cover; position: absolute; opacity: 0.6; display: block; }
+        .hero-content { position: relative; z-index: 2; text-align: center; background: rgba(0,0,0,0.6); padding: 20px; width: 100%; color: white; }
+
+        /* STICKY NAV */
+        .sticky-controls { position: sticky; top: 0; z-index: 1000; background: var(--bg); border-bottom: 2px solid var(--accent); padding: 15px; }
+        .nav-dash { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .nav-btn { padding: 8px 15px; background: var(--card); border: 1px solid var(--accent); color: var(--text); cursor: pointer; text-decoration: none; border-radius: 5px; font-size: 0.85rem; font-weight: bold; }
+        .nav-btn:hover { background: var(--accent); color: white; }
+        
+        .toolbar { display: flex; justify-content: center; gap: 15px; align-items: center; }
+        .search-bar { width: 40%; padding: 12px 20px; border-radius: 25px; border: 2px solid var(--accent); background: var(--card); color: var(--text); outline: none; }
+        .icon-btn { background: var(--accent); border: none; color: white; padding: 10px; border-radius: 50%; cursor: pointer; width: 45px; height: 45px; font-size: 1.2rem; }
+
+        /* FEATURES GRID */
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1100px; margin: 25px auto; padding: 0 20px; }
+        .feature-box { background: var(--card); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid var(--accent); }
+        .flashcard { height: 160px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.3rem; font-weight: bold; padding: 20px; border: 2px dashed var(--accent); border-radius: 10px; margin-top: 10px; }
+        .xp-display { font-size: 1.6rem; color: var(--highlight); font-weight: bold; }
+
+        /* TABLES */
+        .container { max-width: 1100px; margin: auto; padding: 20px; }
+        .topic-head { background: var(--accent); color: white; padding: 15px; border-radius: 5px; margin-top: 50px; font-size: 2rem; font-weight: 800; scroll-margin-top: 200px; }
+        .sub-head { color: var(--highlight); font-size: 1.5rem; margin: 30px 0 10px; border-left: 5px solid var(--highlight); padding-left: 10px; scroll-margin-top: 200px; }
+
+        table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; margin-bottom: 50px; table-layout: fixed; }
+        th { background: #000; color: var(--accent); padding: 15px; text-align: left; text-transform: uppercase; }
+        td { padding: 12px; border-bottom: 1px solid #334155; word-wrap: break-word; }
+        .ans-txt { color: var(--ans); font-weight: bold; }
+        .audio-btn { background: none; border: none; cursor: pointer; font-size: 1.3rem; color: var(--accent); }
+
+        @media print { .hero, .sticky-controls, .features-grid, .audio-btn { display: none !important; } table { color: black; background: white; width: 100%; } }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="hero-pane">
+        <img src="https://images.pexels.com/photos/208648/pexels-photo-208648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="History and Politics">
+        <div class="hero-content"><h1>HISTORY & POLITICS</h1></div>
+    </div>
+    <div class="hero-pane">
+        <img src="https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Science and Technology">
+        <div class="hero-content"><h1>SCIENCE & TECH</h1></div>
+    </div>
+</div>
+
+<div class="sticky-controls">
+    <div class="nav-dash">
+        <a href="#h1" class="nav-btn">Histories' Firsts</a>
+        <a href="#h2" class="nav-btn">Anthems & Writers</a>
+        <a href="#h3" class="nav-btn">Leaders & Personalities</a>
+        <a href="#s1" class="nav-btn">Famous Inventions</a>
+        <a href="#s2" class="nav-btn">Discoveries & Laws</a>
+        <a href="#s3" class="nav-btn">Space & Pioneers</a>
+    </div>
+    <div class="toolbar">
+        <button class="icon-btn" onclick="toggleTheme()">🌓</button>
+        <input type="text" id="mainSearch" class="search-bar" placeholder="Search 300 facts..." onkeyup="doSearch()">
+        <button class="icon-btn" onclick="startVoice()">🎤</button>
+        <button class="icon-btn" onclick="window.print()">🖨️</button>
+        <div class="xp-display">XP: <span id="xpCount">0</span></div>
+    </div>
+</div>
+
+<div class="features-grid">
+    <div class="feature-box">
+        <h3>⚡ FLASHCARDS</h3>
+        <p>Click to Reveal Answer / Next</p>
+        <div id="card" class="flashcard" onclick="flipCard()">Click to Start</div>
+    </div>
+    <div class="feature-box">
+        <h3>🎯 XP CHALLENGE</h3>
+        <p id="quiz-q">Ready to test your knowledge?</p>
+        <input type="text" id="quiz-a" style="padding:10px; width:70%; margin-bottom: 10px; border-radius: 5px;" placeholder="Your answer...">
+        <br>
+        <button onclick="checkQuiz()" style="padding:10px 20px; background:var(--ans); border:none; cursor:pointer; font-weight:bold; border-radius: 5px;">SUBMIT</button>
+    </div>
+</div>
+
+<div class="container" id="content-inject">
+    </div>
+
+<script>
+const db = {
+    h1: [
+        ["First President of India", "Dr. Rajendra Prasad"], ["First PM of India", "Jawaharlal Nehru"], ["First Woman PM of India", "Indira Gandhi"], ["First Mughal Emperor", "Babur"], ["First University in the World", "Taxila"],
+        ["First Indian in Space", "Rakesh Sharma"], ["First Man on Moon", "Neil Armstrong"], ["First Woman President India", "Pratibha Patil"], ["First British Gov-General", "Warren Hastings"], ["First Indian Gov-General", "C. Rajagopalachari"],
+        ["First Railway in India", "1853"], ["First Silent Film", "Raja Harishchandra"], ["First Talkie Film", "Alam Ara"], ["First Nobel Laureate", "Rabindranath Tagore"], ["First woman on Everest", "Junko Tabei"],
+        ["First Indian Woman on Everest", "Bachendri Pal"], ["First Speaker of Lok Sabha", "G.V. Mavalankar"], ["First Chief Justice", "H.J. Kania"], ["First Indian Pilot", "J.R.D. Tata"], ["First Viceroy of India", "Lord Canning"],
+        ["First Census in India", "1872"], ["First Post Office India", "Kolkata (1727)"], ["First Telegraph Line", "Kolkata to Diamond Harbour"], ["First Newspaper in India", "Hicky's Bengal Gazette"], ["First Indian Miss World", "Reita Faria"],
+        ["First Indian Miss Universe", "Sushmita Sen"], ["First Five Year Plan", "1951"], ["First Woman IPS Officer", "Kiran Bedi"], ["First Woman Judge (SC)", "M. Fathima Beevi"], ["First Atomic Reactor", "Apsara"],
+        ["First Heart Transplant India", "Dr. P. Venugopal"], ["First Test Tube Baby India", "Durga (Kanupriya)"], ["First Deputy PM", "Sardar Patel"], ["First Law Minister of India", "B.R. Ambedkar"], ["First Education Minister", "Abul Kalam Azad"],
+        ["First Woman Nobel Winner (Ind)", "Mother Teresa"], ["First Olympic Gold (Indiv)", "Abhinav Bindra"], ["First Bharat Ratna", "C. Rajagopalachari"], ["First Grandmaster (Chess)", "V. Anand"], ["First Woman Governor", "Sarojini Naidu"],
+        ["First Space Tourist", "Dennis Tito"], ["First Country: Paper Money", "China"], ["First Country: Constitution", "USA"], ["First Atom Bomb Target", "Hiroshima"], ["First Man around World", "Magellan"],
+        ["First Sec General UN", "Trygve Lie"], ["First Modern Olympics", "Greece (1896)"], ["First World Cup Football", "Uruguay"], ["First Woman Space Tourist", "Anousheh Ansari"], ["First Country on Mars", "USA"]
+    ],
+    h2: [
+        ["India", "Jana Gana Mana", "Rabindranath Tagore"], ["Bangladesh", "Amar Sonar Bangla", "Rabindranath Tagore"], ["USA", "The Star-Spangled Banner", "Francis Scott Key"], ["UK", "God Save the King", "Henry Carey"], ["France", "La Marseillaise", "Rouget de Lisle"],
+        ["Germany", "Deutschlandlied", "Hoffmann v. Fallersleben"], ["Japan", "Kimigayo", "Traditional"], ["China", "March of the Volunteers", "Tian Han"], ["Russia", "State Anthem", "Sergey Mikhalkov"], ["Pakistan", "Qaumi Taranah", "Hafeez Jalandhari"],
+        ["Sri Lanka", "Sri Lanka Matha", "Ananda Samarakoon"], ["Australia", "Advance Australia Fair", "Peter Dodds McCormick"], ["Canada", "O Canada", "Calixa Lavallée"], ["Italy", "Il Canto degli Italiani", "Goffredo Mameli"], ["Mexico", "Himno Nacional", "Francisco Bocanegra"],
+        ["Brazil", "Hino Nacional", "Joaquim Duque-Estrada"], ["Nepal", "Sayaun Thunga Pool", "Pradeep Kumar Rai"], ["South Africa", "National Anthem", "Enoch Sontonga"], ["Greece", "Hymn to Liberty", "Dionysios Solomos"], ["Israel", "Hatikvah", "Naftali Herz Imber"],
+        ["Egypt", "Bilady, Bilady", "Sayed Darwish"], ["Netherlands", "Wilhelmus", "Philips van Marnix"], ["Portugal", "A Portuguesa", "Henrique de Mendonça"], ["Spain", "Marcha Real", "Unknown"], ["Argentina", "Himno Nacional", "Vicente López"],
+        ["Poland", "Mazurek Dąbrowskiego", "Józef Wybicki"], ["Switzerland", "Swiss Psalm", "Leonhard Widmer"], ["Turkey", "İstiklal Marşı", "Mehmet Akif Ersoy"], ["Vietnam", "Tiến Quân Ca", "Van Cao"], ["South Korea", "Aegukga", "An Chang-ho"],
+        ["Thailand", "Phleng Chat", "Luang Saranupraphan"], ["Norway", "Ja, vi elsker", "Bjørnstjerne Bjørnson"], ["Denmark", "Der er et yndigt land", "Adam Oehlenschläger"], ["Philippines", "Lupang Hinirang", "José Palma"], ["Indonesia", "Indonesia Raya", "W.R. Supratman"],
+        ["Malaysia", "Negaraku", "Saiful Bahri"], ["Singapore", "Majulah Singapura", "Zubir Said"], ["Cuba", "La Bayamesa", "Perucho Figueredo"], ["Jamaica", "Jamaica, Land We Love", "Hugh Sherlock"], ["New Zealand", "God Defend New Zealand", "Thomas Bracken"],
+        ["Ireland", "The Soldier's Song", "Peadar Kearney"], ["Sweden", "Du gamla, Du fria", "Richard Dybeck"], ["Finland", "Maamme", "Johan Ludvig Runeberg"], ["Austria", "Land der Berge", "Paula von Preradović"], ["Chile", "Himno Nacional", "Eusebio Lillo"],
+        ["Afghanistan", "Milli Surood", "Abdul Bari Jahani"], ["Iraq", "Mawtini", "Ibrahim Tuqan"], ["Iran", "Soroud-e Melli", "Sayed Bagher Pashay"], ["Saudi Arabia", "As-Salam Al-Malaki", "Ibrahim Khafaji"], ["UAE", "Ishy Biladi", "Arif Al Sheikh"]
+    ],
+    h3: [
+        ["Iron Man of India", "Sardar Patel"], ["Father of the Nation", "Mahatma Gandhi"], ["Missile Man of India", "A.P.J. Abdul Kalam"], ["Netaji", "Subhash Chandra Bose"], ["Frontier Gandhi", "Khan Abdul Ghaffar Khan"],
+        ["Nightingale of India", "Sarojini Naidu"], ["Grand Old Man of India", "Dadabhai Naoroji"], ["Punjab Kesari", "Lala Lajpat Rai"], ["Deshbandhu", "C.R. Das"], ["Lokmanya", "Bal Gangadhar Tilak"],
+        ["Flying Sikh", "Milkha Singh"], ["Hockey Wizard", "Dhyan Chand"], ["Little Master", "Sunil Gavaskar"], ["Master Blaster", "Sachin Tendulkar"], ["Payyoli Express", "P.T. Usha"],
+        ["Bapu", "Mahatma Gandhi"], ["Chanakya of Modern India", "P.V. Narasimha Rao"], ["Architect of Constitution", "B.R. Ambedkar"], ["Lion of Punjab", "Ranjit Singh"], ["Tiger of Mysore", "Tipu Sultan"],
+        ["Shakespeare of India", "Kalidasa"], ["Napoleon of India", "Samudragupta"], ["Machiavelli of India", "Chanakya"], ["Light of Asia", "Gautama Buddha"], ["Saint of Gutters", "Mother Teresa"],
+        ["Lady with the Lamp", "Florence Nightingale"], ["Man of Destiny", "Napoleon Bonaparte"], ["Iron Lady", "Margaret Thatcher"], ["Fuhrer", "Adolf Hitler"], ["Desert Fox", "Erwin Rommel"],
+        ["Maid of Orleans", "Joan of Arc"], ["Great Emancipator", "Abraham Lincoln"], ["Bard of Avon", "Shakespeare"], ["Father of Geometry", "Euclid"], ["Father of History", "Herodotus"],
+        ["Father of Economics", "Adam Smith"], ["Father of Biology", "Aristotle"], ["Father of Philosophy", "Socrates"], ["Father of Poetry", "Geoffrey Chaucer"], ["Prince of Patriots", "Subhash Bose"],
+        ["Morning Star: Reformation", "Raja Ram Mohan Roy"], ["Father of Indian Unrest", "Tilak"], ["Birdman of India", "Salim Ali"], ["Waterman of India", "Rajendra Singh"], ["Forest Man of India", "Jadav Payeng"],
+        ["Missile Woman India", "Tessy Thomas"], ["Deenbandhu", "C.F. Andrews"], ["Lok Nayak", "J.P. Narayan"], ["Mahamana", "Madan Mohan Malaviya"], ["Rajaji", "C. Rajagopalachari"]
+    ],
+    s1: [
+        ["Telephone", "Graham Bell"], ["Light Bulb", "Thomas Edison"], ["Radio", "Guglielmo Marconi"], ["Television", "John Logie Baird"], ["Airplane", "Wright Brothers"],
+        ["Steam Engine", "James Watt"], ["Printing Press", "Johannes Gutenberg"], ["Microscope", "Zacharias Janssen"], ["Telescope", "Galileo Galilei"], ["Battery", "Alessandro Volta"],
+        ["Dynamite", "Alfred Nobel"], ["Stethoscope", "Rene Laennec"], ["Barometer", "Torricelli"], ["Periodic Table", "Mendeleev"], ["Transistor", "Bardeen & Shockley"],
+        ["Laser", "Theodore Maiman"], ["Fountain Pen", "Waterman"], ["Ballpoint Pen", "László Bíró"], ["Cinema", "Lumiere Brothers"], ["Jet Engine", "Frank Whittle"],
+        ["Hovercraft", "Cockerell"], ["Safety Razor", "Gillette"], ["Diesel Engine", "Rudolf Diesel"], ["Radar", "Watson-Watt"], ["Machine Gun", "Gatling"],
+        ["Thermometer", "Fahrenheit"], ["Sewing Machine", "Elias Howe"], ["Revolver", "Samuel Colt"], ["Typewriter", "Sholes"], ["Calculator", "Pascal"],
+        ["Bicycle", "Macmillan"], ["Transformer", "Faraday"], ["Electric Motor", "Faraday"], ["Safety Match", "John Walker"], ["Cement", "Joseph Aspdin"],
+        ["Fiber Optics", "Narinder Kapany"], ["Pendulum Clock", "Huygens"], ["Reflecting Telescope", "Newton"], ["Galvanometer", "Ampere"], ["Neon Lamp", "Claude"],
+        ["Tank", "Swinton"], ["Submarine", "Bushnell"], ["Parachute", "Garnerin"], ["Gramophone", "Edison"], ["Air Conditioning", "Carrier"],
+        ["Vacuum Cleaner", "Booth"], ["Washing Machine", "Hurley"], ["Microwave", "Percy Spencer"], ["Polaroid Camera", "Land"], ["Hoverboard", "Shane Chen"]
+    ],
+    s2: [
+        ["Gravity", "Isaac Newton"], ["Penicillin", "Alexander Fleming"], ["Theory of Relativity", "Einstein"], ["Radium", "Marie Curie"], ["X-rays", "Wilhelm Roentgen"],
+        ["Electrons", "J.J. Thomson"], ["Atomic Nucleus", "Rutherford"], ["Zero", "Aryabhata"], ["First Vaccination", "Edward Jenner"], ["Blood Groups", "Karl Landsteiner"],
+        ["Oxygen", "Joseph Priestley"], ["Structure of DNA", "Watson & Crick"], ["Hydrogen", "Henry Cavendish"], ["Insulin", "Banting"], ["Radioactivity", "Becquerel"],
+        ["Polio Vaccine", "Jonas Salk"], ["Blood Circulation", "William Harvey"], ["Ozone Layer", "Charles Fabry"], ["Laws of Heredity", "Gregor Mendel"], ["Quantum Theory", "Max Planck"],
+        ["Cell", "Robert Hooke"], ["Bacteria", "Leeuwenhoek"], ["Neutron", "James Chadwick"], ["Proton", "Rutherford"], ["Smallpox Vaccine", "Jenner"],
+        ["Atomic Theory", "John Dalton"], ["Radio Waves", "Hertz"], ["Electromagnetic Induction", "Faraday"], ["Evolution", "Charles Darwin"], ["Superconductivity", "Onnes"],
+        ["Positron", "Anderson"], ["Anesthesia", "Morton"], ["Vitamins", "Funk"], ["Uranium", "Klaproth"], ["Inert Gases", "Ramsay"],
+        ["Photosynthesis", "Ingenhousz"], ["Logarithms", "Napier"], ["Planetary Motion", "Kepler"], ["Speed of Light", "Ole Romer"], ["Thermodynamics", "Carnot"],
+        ["Hydraulics", "Pascal"], ["Electromagnet", "Sturgeon"], ["Antiseptics", "Lister"], ["Malaria Parasite", "Ronald Ross"], ["Chlorine", "Scheele"],
+        ["Sodium/Potassium", "Davy"], ["Microbiology", "Louis Pasteur"], ["Calculus", "Newton/Leibniz"], ["Seismograph", "Milne"], ["Radioactivity (Thorium)", "Curie"]
+    ],
+    s3: [
+        ["First Satellite", "Sputnik 1"], ["First Animal: Space", "Laika"], ["First Human: Space", "Yuri Gagarin"], ["First Man on Moon", "Neil Armstrong"], ["First Cloned Mammal", "Dolly"],
+        ["First Heart Transplant", "Christian Barnard"], ["First Test Tube Baby", "Louise Brown"], ["First Digital Computer", "ENIAC"], ["First Microprocessor", "Intel 4004"], ["First Humanoid Citizen", "Sophia"],
+        ["First Space Shuttle", "Columbia"], ["First Space Station", "Salyut 1"], ["First GPS Satellite", "Navstar 1"], ["First Mobile Phone", "Martin Cooper"], ["First Website", "CERN"],
+        ["Father of Indian Space", "Vikram Sarabhai"], ["Father of Indian Nuclear", "Homi Bhabha"], ["Father of Genetics", "Gregor Mendel"], ["Father of Computers", "Charles Babbage"], ["Father of AI", "John McCarthy"],
+        ["Father of Geometry", "Euclid"], ["Father of Modern Physics", "Einstein"], ["Father of Medicine", "Hippocrates"], ["Father of Astronomy", "Copernicus"], ["Father of Chemistry", "Lavoisier"],
+        ["Father of Robotics", "Joseph Engelberger"], ["First Indian Satellite", "Aryabhata"], ["First Indian Moon Mission", "Chandrayaan-1"], ["First Indian Mars Mission", "Mangalyaan"], ["First Indian Nuclear Test", "Pokhran-1"],
+        ["First Supersonic Flight", "Chuck Yeager"], ["First Video Game", "Tennis for Two"], ["First Email", "Ray Tomlinson"], ["First Laptop", "Osborne 1"], ["First 3D Printer", "Chuck Hull"],
+        ["First DNA Fingerprinting", "Alec Jeffreys"], ["First Digital Camera", "Steven Sasson"], ["First Indian Heart Transplant", "Venugopal"], ["First Nuclear Station India", "Tarapur"], ["First Hydroelectric India", "Sidrapong"],
+        ["First Surgeon", "Sushruta"], ["Father of Ayurveda", "Charaka"], ["Father of Yoga", "Patanjali"], ["First Woman Nobel", "Marie Curie"], ["Two Nobel Prizes", "Marie Curie"],
+        ["First Vaccine", "Smallpox"], ["First Antibiotic", "Penicillin"], ["First Periodic Element", "Hydrogen"], ["First Synthetic Fiber", "Nylon"], ["First Browser", "WorldWideWeb"]
+    ]
+};
+
+const headings = {
+    h1: "Histories' Firsts",
+    h2: "Sub-Topic 2: National Anthems and Writers",
+    h3: "Sub-Topic 3: Great Leaders and Personalities",
+    s1: "Sub-Topic 1: Famous Inventions",
+    s2: "Sub-Topic 2: Great Discoveries and Laws",
+    s3: "Sub-Topic 3: Space and Modern Pioneers"
+};
+
+function render() {
+    let out = `<div id="topic1" class="topic-head">TOPIC 1: HISTORY AND POLITICS</div>`;
+    
+    // Subtopic 1
+    out += `<div id="h1" class="sub-head">${headings.h1}</div><table><thead><tr><th>Knowledge Question</th><th>Verified Fact</th><th style="width:50px">🔊</th></tr></thead><tbody>`;
+    db.h1.forEach(r => { out += `<tr><td>${r[0]}</td><td class="ans-txt">${r[1]}</td><td><button class="audio-btn" onclick="say('${r[0]}', '${r[1]}')">🔊</button></td></tr>`; });
+    out += `</tbody></table>`;
+
+    // Subtopic 2: SPECIAL COLUMN FOR WRITERS
+    out += `<div id="h2" class="sub-head">${headings.h2}</div><table><thead><tr><th>Country</th><th>Anthem Name</th><th>Writer Name</th><th style="width:50px">🔊</th></tr></thead><tbody>`;
+    db.h2.forEach(r => { out += `<tr><td>${r[0]}</td><td class="ans-txt">${r[1]}</td><td>${r[2]}</td><td><button class="audio-btn" onclick="say('${r[0]} Anthem: ${r[1]}', 'Written by: ${r[2]}')">🔊</button></td></tr>`; });
+    out += `</tbody></table>`;
+
+    // Subtopic 3
+    out += `<div id="h3" class="sub-head">${headings.h3}</div><table><thead><tr><th>Title/Nickname</th><th>Name</th><th style="width:50px">🔊</th></tr></thead><tbody>`;
+    db.h3.forEach(r => { out += `<tr><td>${r[0]}</td><td class="ans-txt">${r[1]}</td><td><button class="audio-btn" onclick="say('${r[0]}', '${r[1]}')">🔊</button></td></tr>`; });
+    out += `</tbody></table>`;
+
+    out += `<div id="topic2" class="topic-head">TOPIC 2: SCIENCE AND TECHNOLOGY</div>`;
+    
+    ['s1','s2','s3'].forEach(k => {
+        out += `<div id="${k}" class="sub-head">${headings[k]}</div><table><thead><tr><th>Topic</th><th>Details</th><th style="width:50px">🔊</th></tr></thead><tbody>`;
+        db[k].forEach(r => { out += `<tr><td>${r[0]}</td><td class="ans-txt">${r[1]}</td><td><button class="audio-btn" onclick="say('${r[0]}', '${r[1]}')">🔊</button></td></tr>`; });
+        out += `</tbody></table>`;
+    });
+
+    document.getElementById('content-inject').innerHTML = out;
+}
+
+// --- UTILS ---
+function toggleTheme() { document.body.classList.toggle('light-mode'); }
+
+// UPDATED: SAYS BOTH QUESTION AND ANSWER
+function say(q, a) { 
+    window.speechSynthesis.cancel(); 
+    const utterance = new SpeechSynthesisUtterance(`${q}. The answer is ${a}`);
+    window.speechSynthesis.speak(utterance); 
+}
+
+function doSearch() {
+    let v = document.getElementById('mainSearch').value.toLowerCase();
+    document.querySelectorAll('tbody tr').forEach(r => r.style.display = r.innerText.toLowerCase().includes(v) ? "" : "none");
+}
+
+function startVoice() {
+    const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    rec.onresult = (e) => { document.getElementById('mainSearch').value = e.results[0][0].transcript; doSearch(); };
+    rec.start();
+}
+
+// --- INTERACTIVE ---
+let xp = 0;
+let flashState = 'q';
+let currentF = null;
+function flipCard() {
+    const display = document.getElementById('card');
+    if(!currentF || flashState === 'a') {
+        const keys = ['h1','h2','h3','s1','s2','s3'];
+        currentF = db[keys[Math.floor(Math.random()*6)]][Math.floor(Math.random()*50)];
+        display.innerText = currentF[0]; display.style.color = "var(--text)"; flashState = 'q';
+    } else {
+        display.innerText = currentF[1]; display.style.color = "var(--ans)"; flashState = 'a';
+    }
+}
+
+let qObj = null;
+function nextQ() {
+    const keys = ['h1','h2','h3','s1','s2','s3'];
+    qObj = db[keys[Math.floor(Math.random()*6)]][Math.floor(Math.random()*50)];
+    document.getElementById('quiz-q').innerText = qObj[0];
+}
+function checkQuiz() {
+    const val = document.getElementById('quiz-a').value.trim().toLowerCase();
+    const correctAns = qObj[1].toLowerCase();
+    if(val === correctAns || (val.length > 2 && correctAns.includes(val))) {
+        xp += 100; document.getElementById('xpCount').innerText = xp;
+        alert("Correct! +100 XP"); nextQ(); document.getElementById('quiz-a').value = "";
+    } else { alert("Incorrect. The answer was: " + qObj[1]); nextQ(); }
+}
+
+window.onload = () => { render(); nextQ(); };
+</script>
+</body>
+</html>
